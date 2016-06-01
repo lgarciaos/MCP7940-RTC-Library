@@ -3,7 +3,7 @@
   Attribution-ShareAlike
   CC BY-SA 
   
-  serial clock, example for MCP7940 rtc library
+  serial functions, example for MCP7940 rtc library
   version 1.0 / 2014/01/27
   http://smi.aii.pub.ro/arduino.html
 */
