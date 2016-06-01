@@ -1,0 +1,2 @@
+# MCP7940-RTC-Library
+MCP7940 RTC Library v1.0
