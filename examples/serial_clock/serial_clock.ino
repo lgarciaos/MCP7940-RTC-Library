@@ -15,50 +15,51 @@ int rtc[7];
 
 void setup()
 {
+  Wire.begin();
   SerialUSB.begin(9600);
   
-  RTC.get(rtc,true); 
+  RTCind.get(rtc,true); 
   // the following 7 lines are used to set the time,
   // only upload this code once uncommented to set the time,
   // afterwards comment these lines out and upload again.
-  RTC.set(MCP7940_SEC,0);
-  RTC.set(MCP7940_MIN,13);
-  RTC.set(MCP7940_HR,18);
-  RTC.set(MCP7940_DOW,1);
-  RTC.set(MCP7940_DATE,27);
-  RTC.set(MCP7940_MTH,1);
-  RTC.set(MCP7940_YR,14);
+  RTCind.set(MCP7940_SEC,0);
+  RTCind.set(MCP7940_MIN,13);
+  RTCind.set(MCP7940_HR,18);
+  RTCind.set(MCP7940_DOW,1);
+  RTCind.set(MCP7940_DATE,27);
+  RTCind.set(MCP7940_MTH,1);
+  RTCind.set(MCP7940_YR,14);
   
   // true for MCP7940N vith back-up battery
   // false for MCP7940M or MCP7940N vith VBAT connected to ground 
-  RTC.start(true);
+  RTCind.start(true);
 }
 
 void loop()
 {
-  RTC.get(rtc,true);
+  RTCind.get(rtc,true);
 
   switch (rtc[3]) {
    case 1: 
-     SerialUSB.print("LUN ");
+     SerialUSB.print("MON ");
      break;
    case 2: 
-     SerialUSB.print("MAR ");
+     SerialUSB.print("TUE ");
      break;
    case 3: 
-     SerialUSB.print("MIE ");
+     SerialUSB.print("WED ");
      break;
    case 4: 
-     SerialUSB.print("JOI ");
+     SerialUSB.print("THU ");
      break;
    case 5: 
-     SerialUSB.print("VIN ");
+     SerialUSB.print("FRI ");
      break;
    case 6: 
-     SerialUSB.print("SAM ");
+     SerialUSB.print("SAT ");
      break;
    case 7: 
-     SerialUSB.print("DUM ");
+     SerialUSB.print("SUN ");
      break;
   }
 
@@ -66,7 +67,7 @@ void loop()
   SerialUSB.print(" ");
   switch (rtc[5]) {
    case 1: 
-     SerialUSB.print("ian");
+     SerialUSB.print("jan");
      break;
    case 2: 
      SerialUSB.print("feb");
@@ -78,13 +79,13 @@ void loop()
      SerialUSB.print("apr");
      break;
    case 5: 
-     SerialUSB.print("mai");
+     SerialUSB.print("may");
      break;
    case 6: 
-     SerialUSB.print("iun");
+     SerialUSB.print("jun");
      break;
    case 7: 
-     SerialUSB.print("iul");
+     SerialUSB.print("jul");
      break;
    case 8: 
      SerialUSB.print("aug");
@@ -96,7 +97,7 @@ void loop()
      SerialUSB.print("oct");
      break;
    case 11: 
-     SerialUSB.print("noi");
+     SerialUSB.print("nov");
      break;
    case 12: 
      SerialUSB.print("dec");
@@ -113,6 +114,5 @@ void loop()
   if (rtc[0]<10) SerialUSB.print("0");
   SerialUSB.println(rtc[0], DEC);
   SerialUSB.println();
-  delay(5000);
+  delay(1000);
 }
-

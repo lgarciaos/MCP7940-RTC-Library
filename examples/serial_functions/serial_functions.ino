@@ -15,38 +15,38 @@ int rtc[7];
 
 void setup()
 {
+  Wire.begin();
   SerialUSB.begin(9600);
 }
 
 void loop()
 {
-  RTC.SetOutput(HIGH);
+  RTCind.SetOutput(HIGH);
   SerialUSB.print("07h HIGH: ");
-  SerialUSB.println (RTC.GetOutput(),BIN);
+  SerialUSB.println (RTCind.GetOutput(),BIN);
   delay(5000);
-  RTC.SetOutput(LOW);
+  RTCind.SetOutput(LOW);
   SerialUSB.print("07h LOW: ");
-  SerialUSB.println (RTC.GetOutput(),BIN);
+  SerialUSB.println (RTCind.GetOutput(),BIN);
   delay(5000);
-  RTC.SetOutput(MCP7940_SQW1HZ);
+  RTCind.SetOutput(MCP7940_SQW1HZ);
   SerialUSB.print("07h MCP7940_SQW1HZ: ");
-  SerialUSB.println (RTC.GetOutput(),BIN);
+  SerialUSB.println (RTCind.GetOutput(),BIN);
   delay(5000);
-  RTCUSB.SetOutput(MCP7940_SQW4KHZ);
+  RTCindUSB.SetOutput(MCP7940_SQW4KHZ);
   SerialUSB.print("07h MCP7940_SQW4KHZ: ");
-  SerialUSB.println (RTC.GetOutput(),BIN);
+  SerialUSB.println (RTCind.GetOutput(),BIN);
   delay(5000);
-  RTC.SetOutput(MCP7940_SQW8KHZ);
+  RTCind.SetOutput(MCP7940_SQW8KHZ);
   SerialUSB.print("07h MCP7940_SQW8KHZ: ");
-  SerialUSB.println (RTC.GetOutput(),BIN);
+  SerialUSB.println (RTCind.GetOutput(),BIN);
   delay(5000);
-  RTC.SetOutput(MCP7940_SQW32KHZ);
+  RTCind.SetOutput(MCP7940_SQW32KHZ);
   SerialUSB.print("07h MCP7940_SQW32KHZ: ");
-  SerialUSB.println (RTC.GetOutput(),BIN);
+  SerialUSB.println (RTCind.GetOutput(),BIN);
   delay(5000);
-  RTC.SetOutput(MCP7940_SQW64KHZ);
+  RTCind.SetOutput(MCP7940_SQW64KHZ);
   SerialUSB.print("07h MCP7940_SQW64KHZ: ");
-  SerialUSB.println (RTC.GetOutput(),BIN);
+  SerialUSB.println (RTCind.GetOutput(),BIN);
   delay(5000);
 }
-

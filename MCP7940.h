@@ -87,6 +87,6 @@ class MCP7940
 	void save(void);
 };
 
-extern MCP7940 RTC;
+extern MCP7940 RTCind;
 
 #endif
