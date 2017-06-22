@@ -33,7 +33,7 @@ void loop()
   SerialUSB.print("07h MCP7940_SQW1HZ: ");
   SerialUSB.println (RTCind.GetOutput(),BIN);
   delay(5000);
-  RTCindUSB.SetOutput(MCP7940_SQW4KHZ);
+  RTCind.SetOutput(MCP7940_SQW4KHZ);
   SerialUSB.print("07h MCP7940_SQW4KHZ: ");
   SerialUSB.println (RTCind.GetOutput(),BIN);
   delay(5000);
