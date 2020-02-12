@@ -18,8 +18,6 @@ MCP7940::MCP7940()
   Wire.begin();
 }
 
-MCP7940 RTCind=MCP7940();
-
 // PRIVATE FUNCTIONS
 
 // Aquire data from the RTC chip in BCD format
