@@ -11,6 +11,7 @@
 #include <Wire.h>
 #include <MCP7940.h>
 
+MCP7940 mcp_rtc;
 int rtc[7];
 
 void setup()
@@ -18,26 +19,26 @@ void setup()
   Wire.begin();
   SerialUSB.begin(9600);
   
-  RTCind.get(rtc,true); 
+  mcp_rtc.get(rtc,true); 
   // the following 7 lines are used to set the time,
   // only upload this code once uncommented to set the time,
   // afterwards comment these lines out and upload again.
-  RTCind.set(MCP7940_SEC,0);
-  RTCind.set(MCP7940_MIN,13);
-  RTCind.set(MCP7940_HR,18);
-  RTCind.set(MCP7940_DOW,1);
-  RTCind.set(MCP7940_DATE,27);
-  RTCind.set(MCP7940_MTH,1);
-  RTCind.set(MCP7940_YR,14);
+  mcp_rtc.set(MCP7940_SEC,0);
+  mcp_rtc.set(MCP7940_MIN,13);
+  mcp_rtc.set(MCP7940_HR,18);
+  mcp_rtc.set(MCP7940_DOW,1);
+  mcp_rtc.set(MCP7940_DATE,27);
+  mcp_rtc.set(MCP7940_MTH,1);
+  mcp_rtc.set(MCP7940_YR,14);
   
   // true for MCP7940N vith back-up battery
   // false for MCP7940M or MCP7940N vith VBAT connected to ground 
-  RTCind.start(true);
+  mcp_rtc.start(true);
 }
 
 void loop()
 {
-  RTCind.get(rtc,true);
+  mcp_rtc.get(rtc,true);
 
   switch (rtc[3]) {
    case 1: 
