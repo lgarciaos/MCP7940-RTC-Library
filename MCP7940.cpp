@@ -1,8 +1,8 @@
 /*
   This software is licensed under a Creative Commons Attribution-ShareAlike 3.0 Unported License
   Attribution-ShareAlike
-  CC BY-SA 
-  
+  CC BY-SA
+
   MCP7940.cpp - library for MCP7940 rtc
   version 1.0 / 2014/01/27
   http://smi.aii.pub.ro/arduino.html
@@ -30,7 +30,7 @@ void MCP7940::read(void)
   Wire.write((uint8_t)0x00);
   Wire.endTransmission();
 
-  // request the 7 bytes of data    (secs, min, hr, dow, date. mth, yr)
+  // request the 7 bytes of data    (secs, min, hr, WKDY, date. mth, yr)
   Wire.requestFrom(MCP7940_CTRL_ID, 7);
   for(int i=0; i<7; i++)
   {
@@ -77,8 +77,8 @@ int MCP7940::get(int c, boolean refresh)  // aquire individual RTC item from buf
   case MCP7940_HR:
     v=(10*((rtc_bcd[MCP7940_HR] & MCP7940_HI_HR)>>4))+(rtc_bcd[MCP7940_HR] & MCP7940_LO_BCD);
 	break;
-  case MCP7940_DOW:
-    v=rtc_bcd[MCP7940_DOW] & MCP7940_LO_DOW;
+  case MCP7940_WKDY:
+    v=rtc_bcd[MCP7940_WKDY] & MCP7940_LO_WKDY;
 	break;
   case MCP7940_DATE:
     v=(10*((rtc_bcd[MCP7940_DATE] & MCP7940_HI_DATE)>>4))+(rtc_bcd[MCP7940_DATE] & MCP7940_LO_BCD);
@@ -118,23 +118,23 @@ void MCP7940::set(int c, int v)  // Update buffer, then update the chip
 	rtc_bcd[MCP7940_HR]=((v / 10)<<4) + (v % 10);
     }
     break;
-  case MCP7940_DOW:
-    if(v<8 && v>-1)
+  case MCP7940_WKDY:
+    if(v<8 && v>0)
     {
-	rtc_bcd[MCP7940_DOW]=v;
+	rtc_bcd[MCP7940_WKDY]=v;
     }
-	rtc_bcd[MCP7940_DOW]=rtc_bcd[MCP7940_DOW] | MCP7940_VBAT_MASK;
+	rtc_bcd[MCP7940_WKDY]=rtc_bcd[MCP7940_WKDY] | MCP7940_VBAT_MASK;
     break;
   case MCP7940_DATE:
-    if(v<31 && v>-1)
+    if(v<31 && v>0)
     {
 	rtc_bcd[MCP7940_DATE]=((v / 10)<<4) + (v % 10);
     }
     break;
   case MCP7940_MTH:
-    if(v<13 && v>-1)
+    if(v<10 && v>0)
     {
-	rtc_bcd[MCP7940_MTH]=((v / 10)<<4) + (v % 10);
+	    rtc_bcd[MCP7940_MTH]= ((v / 10)<<4) + (v % 10);
     }
     break;
   case MCP7940_YR:
@@ -160,13 +160,13 @@ void MCP7940::start(boolean VBAT)
 {
 	if (VBAT) MCP7940_VBAT_MASK=B00001000;
 	read();
-	rtc_bcd[MCP7940_DOW]=rtc_bcd[MCP7940_DOW] | MCP7940_VBAT_MASK;
+	rtc_bcd[MCP7940_WKDY]=rtc_bcd[MCP7940_WKDY] | MCP7940_VBAT_MASK;
     rtc_bcd[MCP7940_SEC]=rtc_bcd[MCP7940_SEC] | (~MCP7940_CLOCKHALT);
 	save();
 }
 
 
-void MCP7940::SetOutput(uint8_t c)  
+void MCP7940::SetOutput(uint8_t c)
 {
   uint8_t out;
   switch(c)
@@ -192,17 +192,17 @@ void MCP7940::SetOutput(uint8_t c)
   case MCP7940_SQW64KHZ :
 	out=MCP7940_SQW64KHZ_BIT;
   break;
-  // default: 
+  // default:
   //	out=MCP7940_LOW_BIT;
   }
-  
+
   Wire.beginTransmission(MCP7940_CTRL_ID);
-  Wire.write((uint8_t)0x07); 
+  Wire.write((uint8_t)0x07);
   Wire.write(out);
   Wire.endTransmission();
 }
 
-uint8_t MCP7940::GetOutput(void)  
+uint8_t MCP7940::GetOutput(void)
 {
   Wire.beginTransmission(MCP7940_CTRL_ID);
   Wire.write((uint8_t)0x07);
@@ -210,7 +210,7 @@ uint8_t MCP7940::GetOutput(void)
 
   Wire.requestFrom(MCP7940_CTRL_ID, 1);
   uint8_t out=Wire.read();
-  
+
 /*  int c=-1;
   switch(out)
   {

@@ -1,8 +1,8 @@
 /*
   This software is licensed under a Creative Commons Attribution-ShareAlike 3.0 Unported License
   Attribution-ShareAlike
-  CC BY-SA 
-  
+  CC BY-SA
+
   MCP7940.h - library for MCP7940 rtc
   version 1.0 / 2014/01/27
   http://smi.aii.pub.ro/arduino.html
@@ -23,13 +23,13 @@
 // include types & constants of Wire ic2 lib
 #include "Wire.h"
 
-#define MCP7940_SEC 0
-#define MCP7940_MIN 1
-#define MCP7940_HR 2
-#define MCP7940_DOW 3
-#define MCP7940_DATE 4
-#define MCP7940_MTH 5
-#define MCP7940_YR 6
+#define MCP7940_SEC 0x00
+#define MCP7940_MIN 0x01
+#define MCP7940_HR 0x02
+#define MCP7940_WKDY 0x03
+#define MCP7940_DATE 0x04
+#define MCP7940_MTH 0x05
+#define MCP7940_YR 0x06
 
 #define MCP7940_BASE_YR 2000
 
@@ -50,10 +50,11 @@
 #define MCP7940_HI_SEC  B01110000
 #define MCP7940_HI_MIN  B01110000
 #define MCP7940_HI_HR   B00110000
-#define MCP7940_LO_DOW  B00000111
+#define MCP7940_LO_WKDY B00000111
 #define MCP7940_HI_DATE B00110000
-#define MCP7940_HI_MTH  B00110000
+#define MCP7940_HI_MTH  B00010000
 #define MCP7940_HI_YR   B11110000
+#define MCP7490_HI_LPYR B00100000
 
 
 // Prescaler
@@ -78,7 +79,7 @@ class MCP7940
     void stop(void);
     void SetOutput(uint8_t);
 	uint8_t GetOutput(void);
-	
+
   // library-accessible "private" interface
   private:
     uint8_t rtc_bcd[7]; // used prior to read/set MCP7490 registers;
